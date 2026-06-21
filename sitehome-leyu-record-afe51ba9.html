@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>乐鱼体育 · 一段日常里的运动叙事</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #faf7f2;
+            font-family: 'Georgia', 'Times New Roman', 'Songti SC', serif;
+            color: #2e2a24;
+            line-height: 1.8;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page {
+            max-width: 820px;
+            width: 100%;
+            background: #fffcf8;
+            padding: 3rem 2.5rem;
+            border-radius: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 600px) {
+            .page {
+                padding: 2rem 1.2rem;
+            }
+            body {
+                padding: 1rem 0.6rem;
+            }
+        }
+
+        .opening-line {
+            font-size: 1.6rem;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+            color: #4e3f31;
+            border-left: 4px solid #c5b29b;
+            padding-left: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        .opening-line small {
+            display: block;
+            font-size: 1rem;
+            color: #928473;
+            margin-top: 0.3rem;
+            font-weight: 300;
+        }
+
+        .body-text {
+            font-size: 1.08rem;
+            margin-bottom: 1.6rem;
+            text-indent: 2em;
+        }
+
+        .body-text a {
+            color: #7f5f3e;
+            text-decoration: none;
+            border-bottom: 2px solid #e3d3c0;
+            padding: 0 0.1em;
+            transition: border-color 0.25s, color 0.2s;
+        }
+
+        .body-text a:hover {
+            border-bottom-color: #7f5f3e;
+            color: #3f2b1b;
+        }
+
+        .feature-box {
+            background: #f5efe8;
+            border-radius: 24px;
+            padding: 2rem 2rem 2rem 2.4rem;
+            margin: 2.8rem 0 2.4rem;
+            list-style: none;
+            counter-reset: feature-counter;
+        }
+
+        .feature-box li {
+            counter-increment: feature-counter;
+            padding: 0.6rem 0 0.6rem 0.2rem;
+            font-size: 1.02rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.6rem;
+            border-bottom: 1px dashed #dad0c4;
+        }
+
+        .feature-box li:last-of-type {
+            border-bottom: none;
+        }
+
+        .feature-box li::before {
+            content: counter(feature-counter);
+            background: #b7a38c;
+            color: #fcf6ef;
+            font-size: 0.8rem;
+            font-weight: 700;
+            width: 1.7rem;
+            height: 1.7rem;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-right: 0.2rem;
+        }
+
+        .pull-quote {
+            background: #ede7df;
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            margin: 2.4rem 0;
+            font-style: italic;
+            color: #3f3427;
+            position: relative;
+            font-size: 1.08rem;
+        }
+
+        .pull-quote::before {
+            content: "“";
+            font-size: 4rem;
+            line-height: 1;
+            color: #c2ae96;
+            position: absolute;
+            top: 0.2rem;
+            left: 0.6rem;
+            font-style: normal;
+        }
+
+        .pull-quote p {
+            margin-left: 1.8rem;
+            text-indent: 0;
+        }
+
+        .scene-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin: 2.4rem 0 1.8rem;
+        }
+
+        .scene-item {
+            flex: 1 1 180px;
+            background: #fcf9f5;
+            border: 1px solid #e7ddd2;
+            border-radius: 20px;
+            padding: 1.2rem 1.2rem 0.8rem;
+            transition: box-shadow 0.2s;
+        }
+
+        .scene-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .scene-item h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #5b4c3a;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.02em;
+        }
+
+        .scene-item p {
+            font-size: 0.95rem;
+            color: #5f5547;
+            line-height: 1.6;
+        }
+
+        .faq-note {
+            margin-top: 2.8rem;
+            padding: 1.6rem 2rem;
+            background: #f2ede6;
+            border-radius: 28px;
+            border-left: 6px solid #b7a38c;
+        }
+
+        .faq-note summary {
+            font-weight: 500;
+            font-size: 1.05rem;
+            color: #3f3021;
+            cursor: pointer;
+            padding: 0.2rem 0;
+        }
+
+        .faq-note details {
+            margin-bottom: 0.6rem;
+        }
+
+        .faq-note details[open] summary {
+            margin-bottom: 0.3rem;
+        }
+
+        .faq-note p {
+            font-size: 0.98rem;
+            color: #504538;
+            margin-left: 0.4rem;
+            padding-left: 0.8rem;
+            border-left: 2px solid #dacfc2;
+        }
+
+        .closing {
+            margin-top: 2.8rem;
+            padding-top: 1.4rem;
+            border-top: 2px solid #ede5db;
+            font-size: 1rem;
+            color: #5f5446;
+            text-align: right;
+            font-style: italic;
+        }
+
+        .closing strong {
+            font-style: normal;
+            color: #3f2b1b;
+        }
+
+        .footnote {
+            margin-top: 1.2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #94897b;
+            letter-spacing: 0.03em;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- 开场短句 -->
+    <div class="opening-line">
+        运动，有时是一段安静的叙述。
+        <small>没有哨音，没有记分牌，只是身体记得节奏。</small>
+    </div>
+
+    <!-- 承接段落 —— 从关键词背后的主题展开 -->
+    <p class="body-text">
+        傍晚六点，穿旧的运动鞋踩在塑胶跑道上，声音很轻，像是翻过一页纸。很多人以为运动需要决心，其实它更像一个日常的约定——和几公里外的球场，和手机里那个熟悉的界面。在<a href="https://sitehome-leyu.com.cn">乐鱼体育</a>，这种约定被拆解成无数细小的入口：一场回放、一组数据、一次社区里的闲聊。没有谁非得成为专家，只需要保持一种“还在场”的兴致。
+    </p>
+
+    <p class="body-text">
+        四年多前我开始留意这个平台，最初只是随手翻翻赛事资讯。后来发现，真正让人留下的不是眼花缭乱的数字，而是那种“随时可以回来”的踏实感。<a href="https://sitehome-leyu.com.cn">乐鱼体育</a>的页面里没有夸张的弹窗，没有逼迫你下注的暗示，它更像一本安静的体育杂志——你可以从任何一页读起，也可以在任何一个段落停下去烧水、遛狗、关灯睡觉。
+    </p>
+
+    <!-- 特点列表（自然融入段落感） -->
+    <ul class="feature-box">
+        <li>内容结构克制，信息层级清晰，不靠闪烁和推送绑架注意力。</li>
+        <li>赛事覆盖宽容，从主流联赛到小众项目，都能找到属于自己的一隅。</li>
+        <li>社区氛围温和，讨论区里少见戾气，更多的是老球迷式的闲谈与调侃。</li>
+        <li>界面沉淀得干净，没有冗余的装饰，像是为“阅读”而非“点击”而设计。</li>
+        <li>数据更新扎实，每一条比分都有温度，不只是一个冷冰冰的数字。</li>
+    </ul>
+
+    <!-- 引用块 —— 温和的过渡 -->
+    <div class="pull-quote">
+        <p>某天深夜，看到一条留言：<br>“今天加班到很晚，打开乐鱼，正好有一场重播。比分我早就知道了，但还是看完了。像和一个老朋友坐着，不说话也不尴尬。”</p>
+    </div>
+
+    <!-- 场景 —— 三个生活截面 -->
+    <div class="scene-group">
+        <div class="scene-item">
+            <h4>通勤路上</h4>
+            <p>地铁晃荡的十分钟，刷一刷早间的赛果。不需要长篇分析，知道谁赢了，就够了。</p>
+        </div>
+        <div class="scene-item">
+            <h4>周末午后</h4>
+            <p>赖在沙发上，开着静音看一场集锦。阳光从窗台爬进来，比分反超的那一瞬，心里也跟着动一下。</p>
+        </div>
+        <div class="scene-item">
+            <h4>深夜独处</h4>
+            <p>翻一翻旧赛季的录像，弹幕稀稀落落。有人在问“还有人记得那年季后赛吗”，你笑了笑，没回复。</p>
+        </div>
+    </div>
+
+    <!-- FAQ 摘要（提示框风格） -->
+    <div class="faq-note">
+        <details>
+            <summary>乐鱼体育的内容更新频率如何？</summary>
+            <p>赛事信息与数据基本实时同步，重点比赛的图文回顾通常在结束后半小时内上线。重播资源保留较完整，适合慢节奏回看。</p>
+        </details>
+        <details>
+            <summary>是否需要注册才能浏览？</summary>
+            <p>大部分资讯和社区板块可直接访问。部分互动功能（如收藏、评论）需简单注册，流程克制，不强制手机绑定。</p>
+        </details>
+        <details>
+            <summary>移动端适配做得怎么样？</summary>
+            <p>页面采用响应式设计，手机浏览器体验流畅。没有独立App，但网页版在手机上的阅读感反而更轻量、不占空间。</p>
+        </details>
+    </div>
+
+    <!-- 温和结尾 -->
+    <div class="closing">
+        <strong>运动</strong>这件事，说到底不是为了战胜谁。<br>
+        它是一段自己和自己待着的时间——<br>
+        而一个合适的角落，能让这段时间变得更安静、更值得。
+    </div>
+
+    <div class="footnote">
+        写于一个平常的周二夜晚 · 空气里有桂花的余味
+    </div>
+
+</div>
+</body>
+</html>
