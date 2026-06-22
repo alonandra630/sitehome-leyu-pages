@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>okooo · 即时比分与赛事情报</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f7f8fa;
+            color: #222;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 2.8rem 1.2rem 4rem;
+        }
+
+        /* hero */
+        .hero {
+            margin-bottom: 3.2rem;
+            text-align: left;
+        }
+
+        .hero .tag {
+            display: inline-block;
+            background: #e5e9f0;
+            color: #244a6f;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 0.15rem 0.7rem;
+            border-radius: 100px;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            color: #0f1a2c;
+            margin-bottom: 0.8rem;
+        }
+
+        .hero h1 span {
+            color: #2f5f8a;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: #444;
+            max-width: 90%;
+        }
+
+        /* 通用标题 */
+        h2 {
+            font-size: 1.35rem;
+            font-weight: 550;
+            letter-spacing: -0.01em;
+            color: #0f1a2c;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.35rem;
+            border-bottom: 1px solid #dae0e8;
+        }
+
+        /* 摘要 */
+        .summary {
+            background: white;
+            border-radius: 20px;
+            padding: 1.6rem 1.8rem;
+            margin-bottom: 2.2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            border: 1px solid #eaeef3;
+        }
+
+        .summary p {
+            margin-bottom: 0.8rem;
+        }
+
+        .summary p:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary a {
+            color: #1d4e7a;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted #b8c9db;
+            transition: border-color 0.15s, color 0.15s;
+        }
+
+        .summary a:hover {
+            color: #0a2a47;
+            border-bottom-color: #1d4e7a;
+        }
+
+        /* 特点网格 */
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1.8rem 0 0.8rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 18px;
+            padding: 1.2rem 1.1rem 1.1rem;
+            border: 1px solid #eaedf3;
+            transition: box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 3px 12px rgba(30, 50, 70, 0.04);
+        }
+
+        .feature-card .emoji-badge {
+            font-size: 1.4rem;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .feature-card h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #0b1b2f;
+            margin-bottom: 0.3rem;
+        }
+
+        .feature-card p {
+            font-size: 0.85rem;
+            color: #3d4c5e;
+            line-height: 1.5;
+        }
+
+        /* 使用建议（场景） */
+        .usage-scene {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.5rem 1.8rem;
+            margin-top: 1.8rem;
+            border: 1px solid #e3e9f0;
+        }
+
+        .usage-scene ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .usage-scene li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #eff2f7;
+            display: flex;
+            gap: 0.7rem;
+            align-items: flex-start;
+        }
+
+        .usage-scene li:last-child {
+            border-bottom: none;
+        }
+
+        .usage-scene .li-icon {
+            font-size: 1rem;
+            min-width: 1.6rem;
+            color: #31597a;
+        }
+
+        /* 可信说明 / 提示 */
+        .trust-note {
+            margin: 2.2rem 0 0.8rem;
+            padding: 1.2rem 1.6rem;
+            background: #eef3f9;
+            border-radius: 18px;
+            border-left: 4px solid #2f5f8a;
+            font-size: 0.92rem;
+            color: #1d3148;
+        }
+
+        .trust-note strong {
+            font-weight: 600;
+            color: #0f1e33;
+        }
+
+        .trust-note a {
+            color: #1a4a70;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            text-decoration-thickness: 1px;
+            text-decoration-color: #b0c8de;
+        }
+
+        .trust-note a:hover {
+            color: #09263e;
+            text-decoration-color: #1a4a70;
+        }
+
+        /* FAQ 摘要 */
+        .faq-mini {
+            margin-top: 2.8rem;
+            padding-top: 0.5rem;
+        }
+
+        .faq-mini details {
+            margin-bottom: 0.8rem;
+            border-radius: 14px;
+            background: white;
+            border: 1px solid #e4eaf0;
+            padding: 0 1.2rem;
+            transition: background 0.1s;
+        }
+
+        .faq-mini details[open] {
+            background: #ffffff;
+        }
+
+        .faq-mini summary {
+            cursor: pointer;
+            padding: 1rem 0;
+            font-weight: 520;
+            color: #0d263e;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-mini summary::after {
+            content: "＋";
+            font-size: 1rem;
+            color: #5b7898;
+            transition: transform 0.2s;
+        }
+
+        .faq-mini details[open] summary::after {
+            content: "−";
+        }
+
+        .faq-mini details p {
+            padding: 0 0 1rem 0;
+            font-size: 0.88rem;
+            color: #2b4057;
+            line-height: 1.6;
+        }
+
+        .faq-mini details a {
+            color: #1d4f78;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .faq-mini details a:hover {
+            color: #0b2a47;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #dce3ec;
+            margin: 3rem 0 0.5rem;
+        }
+
+        .footer-note {
+            font-size: 0.75rem;
+            color: #6e7f94;
+            text-align: left;
+            margin-top: 0.6rem;
+            letter-spacing: 0.01em;
+        }
+
+        /* 响应式 */
+        @media (max-width: 520px) {
+            .container {
+                padding: 1.8rem 1rem 3rem;
+            }
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+            .hero p {
+                max-width: 100%;
+                font-size: 0.95rem;
+            }
+            .features {
+                grid-template-columns: 1fr;
+                gap: 0.9rem;
+            }
+            .summary {
+                padding: 1.2rem 1.2rem;
+            }
+            .usage-scene {
+                padding: 1.2rem 1.1rem;
+            }
+        }
+
+        @media (min-width: 800px) {
+            .container {
+                padding-top: 3.5rem;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- hero -->
+    <div class="hero">
+        <span class="tag">即时比分 · 赛事数据</span>
+        <h1>更专注的赛场信息源：<span>okooo</span></h1>
+        <p>面向日常关注足球与篮球赛事的用户，提供清晰、克制的比分与数据参考。</p>
+    </div>
+
+    <!-- 摘要 -->
+    <div class="summary">
+        <p><strong>okooo</strong> 是一个聚焦实时比分的轻量信息站点。没有冗余推送与过度包装，页面以赛事时间线、联赛筛选、历史交锋数据为主体结构，方便快速浏览正在进行的比赛及关键事件。</p>
+        <p>站点覆盖欧洲主要联赛及杯赛、亚洲赛事、NBA等，比分卡片包含进球、红黄牌、换人等基础动态。整体体验接近一本“赛场笔记本”——列出事实，不预设立场。如果你习惯自己判断局势，<a href="https://score-okooo.com">okooo</a> 的数据呈现方式会是比较自然的参考。</p>
+    </div>
+
+    <!-- 亮点：特点卡片 -->
+    <h2>几个值得留意的细节</h2>
+    <div class="features">
+        <div class="feature-card">
+            <span class="emoji-badge">📋</span>
+            <h3>无干扰信息流</h3>
+            <p>不在比赛列表穿插广告流或弹窗提示，页面重心始终放在赛果与时间线上。</p>
+        </div>
+        <div class="feature-card">
+            <span class="emoji-badge">⚙️</span>
+            <h3>可筛选的联赛清单</h3>
+            <p>按地区或赛事分类查看，减少无关赛程干扰，适合只看特定联赛的用户。</p>
+        </div>
+        <div class="feature-card">
+            <span class="emoji-badge">🔄</span>
+            <h3>自动刷新</h3>
+            <p>比分页面的关键数据会按短周期静默更新，省去手动刷新的繁琐。</p>
+        </div>
+        <div class="feature-card">
+            <span class="emoji-badge">📊</span>
+            <h3>过往交锋参考</h3>
+            <p>每场比赛附有历史对战记录，用简洁表格展示胜负与进球分布。</p>
+        </div>
+    </div>
+
+    <!-- 使用建议：场景化说明 -->
+    <h2>适合这样使用它</h2>
+    <div class="usage-scene">
+        <ul>
+            <li><span class="li-icon">⏱️</span> <span><strong>同时关注多场联赛</strong> —— 边看比赛边在 <a href="https://score-okooo.com">okooo</a> 追踪其他场次实时动态，多窗口无负担。</span></li>
+            <li><span class="li-icon">📱</span> <span><strong>通勤或碎片时间</strong> —— 无需登录或注册，打开即可看到当日重点赛事与即时比分。</span></li>
+            <li><span class="li-icon">🧐</span> <span><strong>赛前快速核对数据</strong> —— 查看两队近期交手记录，辅助自己的观赛或讨论准备。</span></li>
+            <li><span class="li-icon">🔄</span> <span><strong>深夜跟赛</strong> —— 页面风格克制，深色浏览环境下视觉压力较小。</span></li>
+        </ul>
+    </div>
+
+    <!-- 可信说明 + 访问提示 -->
+    <div class="trust-note">
+        <strong>关于数据来源与使用习惯</strong> —— 网站所展示的赛果与比赛事件均来自公开数据整合，更新速度受赛事转播与数据源影响，可能存在分钟级延迟。请将 <a href="https://score-okooo.com">okooo</a> 作为参考工具之一，最终赛果以官方记录为准。建议在稳固的网络环境下使用，移动端同样适配良好。
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <div class="faq-mini">
+        <h2>常见想法 · 简短回应</h2>
+        <details>
+            <summary>需要注册或付费吗？</summary>
+            <p>目前站点无需注册，也没有付费墙。你可以直接浏览所有比分与基础数据，无账户体系干扰。</p>
+        </details>
+        <details>
+            <summary>数据覆盖哪些赛事？</summary>
+            <p>以欧洲主流联赛（英超、西甲、意甲、德甲、法甲等）以及欧冠、欧联、NBA 为主，同时包含日韩、澳超、巴甲等部分赛事。具体列表以页面实时显示为准。</p>
+        </details>
+        <details>
+            <summary>手机浏览器上体验如何？</summary>
+            <p>页面采用自适应布局，在手机浏览器上阅读与点击区域都经过基础优化。如果遇到显示问题，可尝试横屏或使用桌面模式。</p>
+        </details>
+    </div>
+
+    <hr>
+    <div class="footer-note">
+        okooo · 页面内容仅作信息参考，不构成任何形式建议或保证。
+    </div>
+
+</div>
+</body>
+</html>
